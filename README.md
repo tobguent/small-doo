@@ -11,7 +11,7 @@ The demo is tested on:
 - Visual Studio 2015
 
 Requirements:
-- Microsoft Windows SDK
+- Windows 10 SDK (10.0.15063.0) - for newer versions update line 18 of file 'cmake/FindDirectX.cmake'
 - DirectX 11
 - CMake 3.8
 
