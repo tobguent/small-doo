@@ -15,7 +15,7 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 	if (DEFINED MSVC_VERSION AND NOT ${MSVC_VERSION} LESS 1700)
 	
 		# iterate the Windows SDK versions
-		foreach(winsdk_version  10.0.15063.0  10.0.14393.0  10.0.10586.0  10.0.10240.0  10.0.10150.0)
+		foreach(winsdk_version  10.0.16299.0 10.0.15063.0  10.0.14393.0  10.0.10586.0  10.0.10240.0  10.0.10150.0)
 		
 			find_path (WIN10_SDK_ROOT_DIR
 				Include/${winsdk_version}/um/windows.h
