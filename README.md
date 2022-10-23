@@ -7,11 +7,11 @@ Tobias Günther, Holger Theisel and Markus Gross <br/>
 Computer Graphics Forum (Proc. Eurographics), 2017.
 
 The demo is tested on:
-- Windows 10
-- Visual Studio 2015, 2017
+- Windows 11
+- Visual Studio 2022 (Community Edition)
 
 Requirements:
-- Windows 10 SDK (10.0.16299.0) - for newer versions update line 18 of file 'cmake/FindDirectX.cmake'
+- Windows SDK (10.0.19041.0)
 - DirectX 11
 - CMake 3.8
 

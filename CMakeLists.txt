@@ -3,7 +3,6 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.8.0)
 PROJECT(small_doo CXX)
 
 SET (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
-FIND_PACKAGE(DirectX REQUIRED)
 
 IF(WIN32)
   ADD_DEFINITIONS(-DNOMINMAX)
@@ -36,7 +35,7 @@ data/tornado.obj
 # executable
 set(SOURCES main.cpp camera.hpp cbuffer.hpp d3d.hpp lines.hpp math.hpp renderer.hpp ${VP_SOURCES} ${VGP_SOURCES} ${CS_SOURCES} shader_Common.hlsli ${OBJ_SOURCES})
 ADD_EXECUTABLE(small_doo ${SOURCES})
-TARGET_LINK_LIBRARIES(small_doo ${DirectX_D3D11_LIBRARY} ${DirectX_DXGI_LIBRARY})
+TARGET_LINK_LIBRARIES(small_doo d3d11.lib dxgi.lib)
 
 if(WIN32) # Check if we are on Windows
   if(MSVC) # Check if we are using the Visual Studio compiler
@@ -49,8 +48,8 @@ endif()
 foreach(SOURCE ${VP_SOURCES})
   GET_FILENAME_COMPONENT(FILE_WE ${SOURCE} NAME_WE)
   ADD_CUSTOM_COMMAND(OUTPUT ${FILE_WE}.vso
-					 COMMAND ${DirectX_FXC_EXECUTABLE} /Fo ${CMAKE_BINARY_DIR}/$<CONFIGURATION>/${FILE_WE}.vso ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE} /nologo /O2 /Tvs_5_0 /E VS
-					 COMMAND ${DirectX_FXC_EXECUTABLE} /Fo ${CMAKE_BINARY_DIR}/$<CONFIGURATION>/${FILE_WE}.pso ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE} /nologo /O2 /Tps_5_0 /E PS
+					 COMMAND fxc.exe /Fo ${CMAKE_BINARY_DIR}/$<CONFIGURATION>/${FILE_WE}.vso ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE} /nologo /O2 /Tvs_5_0 /E VS
+					 COMMAND fxc.exe /Fo ${CMAKE_BINARY_DIR}/$<CONFIGURATION>/${FILE_WE}.pso ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE} /nologo /O2 /Tps_5_0 /E PS
                      MAIN_DEPENDENCY ${SOURCE}
                      COMMENT "Compile vertex and pixel shader: ${SOURCE} \n ${COMMAND}"
                      VERBATIM)
@@ -59,9 +58,9 @@ endforeach(SOURCE)
 foreach(SOURCE ${VGP_SOURCES})
   GET_FILENAME_COMPONENT(FILE_WE ${SOURCE} NAME_WE)
   ADD_CUSTOM_COMMAND(OUTPUT ${FILE_WE}.vso
-					 COMMAND ${DirectX_FXC_EXECUTABLE} /Fo ${CMAKE_BINARY_DIR}/$<CONFIGURATION>/${FILE_WE}.vso ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE} /nologo /O2 /Tvs_5_0 /E VS
-					 COMMAND ${DirectX_FXC_EXECUTABLE} /Fo ${CMAKE_BINARY_DIR}/$<CONFIGURATION>/${FILE_WE}.gso ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE} /nologo /O2 /Tgs_5_0 /E GS
-					 COMMAND ${DirectX_FXC_EXECUTABLE} /Fo ${CMAKE_BINARY_DIR}/$<CONFIGURATION>/${FILE_WE}.pso ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE} /nologo /O2 /Tps_5_0 /E PS
+					 COMMAND fxc.exe /Fo ${CMAKE_BINARY_DIR}/$<CONFIGURATION>/${FILE_WE}.vso ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE} /nologo /O2 /Tvs_5_0 /E VS
+					 COMMAND fxc.exe /Fo ${CMAKE_BINARY_DIR}/$<CONFIGURATION>/${FILE_WE}.gso ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE} /nologo /O2 /Tgs_5_0 /E GS
+					 COMMAND fxc.exe /Fo ${CMAKE_BINARY_DIR}/$<CONFIGURATION>/${FILE_WE}.pso ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE} /nologo /O2 /Tps_5_0 /E PS
                      MAIN_DEPENDENCY ${SOURCE}
                      COMMENT "Compile vertex, geometry and pixel shader: ${SOURCE} \n ${COMMAND}"
                      VERBATIM)
@@ -70,7 +69,7 @@ endforeach(SOURCE)
 foreach(SOURCE ${CS_SOURCES})
   GET_FILENAME_COMPONENT(FILE_WE ${SOURCE} NAME_WE)
   ADD_CUSTOM_COMMAND(OUTPUT ${FILE_WE}.cso
-					 COMMAND ${DirectX_FXC_EXECUTABLE} /Fo ${CMAKE_BINARY_DIR}/$<CONFIGURATION>/${FILE_WE}.cso ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE} /nologo /O2 /Tcs_5_0 /E CS
+					 COMMAND fxc.exe /Fo ${CMAKE_BINARY_DIR}/$<CONFIGURATION>/${FILE_WE}.cso ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE} /nologo /O2 /Tcs_5_0 /E CS
                      MAIN_DEPENDENCY ${SOURCE}
                      COMMENT "Compile compute shader: ${SOURCE} \n ${COMMAND}"
                      VERBATIM)
